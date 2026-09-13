@@ -39,3 +39,6 @@ $RECYCLE.BIN/
 .DS_Store
 .env
 config.toml
+
+# 本地内置的构建依赖（jar 不入库，见 vendor/README.md）
+vendor/maven/
