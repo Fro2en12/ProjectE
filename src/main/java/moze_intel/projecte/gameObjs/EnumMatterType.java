@@ -43,7 +43,10 @@ public enum EnumMatterType implements StringRepresentable, IMatterType {
 
 	@Override
 	public int getUses() {
-		return 0;
+		// TieredItem overwrites whatever Item.Properties#durability set with this value, so it has to be
+		// positive or tools still fail to serialize with "Value must be positive: 0". PETool#damageItem
+		// returns 0, so this durability is never actually consumed.
+		return Integer.MAX_VALUE;
 	}
 
 	@Override
