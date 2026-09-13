@@ -222,12 +222,28 @@ static void exclusiveRepo(RepositoryHandler handler, String url, Consumer<Inclus
 }
 
 repositories { RepositoryHandler handler ->
+    // Bundled EMI, so the build does not depend on reaching maven.terraformersmc.com.
+    // Gradle skips this repository entirely when the directory is absent.
+    maven {
+        name = 'Local EMI Maven'
+        url = uri(rootProject.projectDir.toString() + "/vendor/maven")
+        content {
+            includeGroup('dev.emi')
+        }
+    }
+    // Official source, kept as a fallback (no longer declared exclusive, see below).
+    maven {
+        name = 'TerraformersMC'
+        url = 'https://maven.terraformersmc.com/'
+        content {
+            includeGroup('dev.emi')
+        }
+    }
     exclusiveRepo(handler, 'https://maven.blamejared.com', filter -> {
         filter.includeGroupAndSubgroups('com.blamejared')
         filter.includeGroup('mezz.jei')
         filter.includeGroup('org.openzen.zencode')
     })
-    exclusiveRepo(handler, 'https://maven.terraformersmc.com/', 'dev.emi')
     exclusiveRepo(handler, 'https://maven.theillusivec4.top/', 'top.theillusivec4.curios')
     exclusiveRepo(handler, 'https://maven2.bai.lol', 'lol.bai', 'mcp.mobius.waila')//WTHIT
     exclusiveRepo(handler, 'https://modmaven.dev/', 'mcjty.theoneprobe')
