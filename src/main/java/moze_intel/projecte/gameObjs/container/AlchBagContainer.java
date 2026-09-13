@@ -20,6 +20,9 @@ public class AlchBagContainer extends PEHandContainer {
 	private final boolean immutable;
 
 	public static AlchBagContainer fromNetwork(int windowId, Inventory playerInv, FriendlyByteBuf buf) {
+		if (buf == null) {
+			return new AlchBagContainer(windowId, playerInv, InteractionHand.MAIN_HAND, new ItemStackHandler(104), 0, false);
+		}
 		return new AlchBagContainer(windowId, playerInv, buf.readEnum(InteractionHand.class), new ItemStackHandler(104), buf.readByte(), buf.readBoolean());
 	}
 

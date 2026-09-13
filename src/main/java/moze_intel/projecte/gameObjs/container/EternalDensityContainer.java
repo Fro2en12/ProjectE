@@ -22,6 +22,9 @@ public class EternalDensityContainer extends PEHandContainer {
 	private final EternalDensityInventory inventory;
 
 	public static EternalDensityContainer fromNetwork(int windowId, Inventory playerInv, FriendlyByteBuf data) {
+		if (data == null) {
+			return new EternalDensityContainer(windowId, playerInv, InteractionHand.MAIN_HAND, 0, true);
+		}
 		return new EternalDensityContainer(windowId, playerInv, data.readEnum(InteractionHand.class), data.readByte(), true);
 	}
 

@@ -19,6 +19,9 @@ import org.jetbrains.annotations.NotNull;
 public class MercurialEyeContainer extends PEHandContainer {
 
 	public static MercurialEyeContainer fromNetwork(int windowId, Inventory playerInv, FriendlyByteBuf buf) {
+		if (buf == null) {
+			return new MercurialEyeContainer(windowId, playerInv, InteractionHand.MAIN_HAND, 0);
+		}
 		return new MercurialEyeContainer(windowId, playerInv, buf.readEnum(InteractionHand.class), buf.readByte());
 	}
 
